@@ -1,0 +1,16 @@
+<h2>Active Items</h2>
+<%@active = @all_items.select{|item| item.bid_end <= Date.today}%>
+<ul>
+<%@active.each do |active_item|%>
+  <li><a href="/items/<%=active_item.id%>"><%=active_item.name%></a></li><br>
+<%end%>
+</ul>
+
+
+<h2>All Items</h2>
+<ul>
+<% @all_items.each do |item|%>
+  <li><a href="/items/<%=item.id%>"><%= item.name%></a></li><br>
+<%end%>
+</ul>
+

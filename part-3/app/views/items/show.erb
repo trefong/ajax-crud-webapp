@@ -1,0 +1,37 @@
+<h1><%=@item.name%></h1><br>
+<h4>Bid Start Date: <%=@item.bid_start%></h4><br>
+<h4>Bid End Date: <%=@item.bid_end%></h4><br>
+Description: <br><%=@item.description%><br><br><br>
+
+<%if current_user.id != @item.user_id%>
+  <h2>Place a bid here!</h2>
+  <form id="bid_form" action="/bids/<%=@item.id%>" method=" post">
+    <label for="amount">Amount:</label>
+    <input type="text" name="amount">
+    <br>
+    <input type="submit" value="Place the bid!">
+
+  </form>
+  <br><br>
+  <%end%>
+
+<% @highest_bid = @bids.max_by{ |bid| bid.amount}%>
+
+<%if @highest_bid%>
+  <h2>Highest Bid</h2>
+  <ul>
+    <h4><li>Amount: $<%=@highest_bid.amount%></li></h4>
+    <h4><li>User #: <%=@highest_bid.user_id%></li></h4><br>
+  </ul>
+<%end%>
+
+<h2>All Bids</h2>
+<ul>
+<%@bids.each do |bid|%>
+<li>Amount: $<%=bid.amount%></li>
+<li>User#: <%=bid.user_id%></li><br>
+<%end%>
+</ul>
+
+
+

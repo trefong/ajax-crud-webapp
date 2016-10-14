@@ -1,0 +1,55 @@
+<h1>HI, <%= @user.user_name %></h1>
+<%if current_user.id = session[:user_id]%>
+<form id="new_item" action="/items" method="post">
+  <label for="name">Item Name:</label>
+  <input type="text" name="item[name]">
+  <br>
+  <label for="description">Item Description:</label>
+  <input type="text" name="item[description]">
+  <br>
+  <label for="bid_start">Bid Start Date:</label>
+  <input type="text" name="item[bid_start]">
+  <br>
+  <label for="bid_end">Bid End Date:</label>
+  <input type="text" name="item[bid_end]">
+  <br>
+
+  <input type="submit" value="Make new item!">
+
+</form>
+<%end%>
+
+<h3>Items posted</h3>
+<% @items.each do |item|%>
+  Name: <%= item.name%><br>
+  Description: <%= item.description%><br>
+  Bid start date: <%= item.bid_start%><br>
+  Bid end date: <%= item.bid_end%><br>
+  <a href="/items/<%=item.id%>/edit">Edit this item</a>
+  <form method="post" action="/items/<%= item.id %>">
+    <input type="hidden" name="_method" value="delete">
+    <button type="submit">Delete</button>
+  </form>
+  <br><br><br>
+
+<%end%>
+
+<h3>Bids placed</h3>
+<% @bids.each do |bid|%>
+  Item #: <%=bid.item_id%><br>
+  Amount: <%= bid.amount%>
+  <br><br><br>
+<%end%>
+
+
+<h3>Items Won</h3>
+<%if @won_items%>
+  <% @won_items.each do |item|%>
+    <%= item.name%>
+  <%end%>
+<%else%>
+<h4>You have no won items</h4>
+<%end%>
+
+
+
